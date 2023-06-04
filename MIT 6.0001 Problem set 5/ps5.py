@@ -91,8 +91,53 @@ class Trigger(object):
 # Problem 2
 # TODO: PhraseTrigger
 
+
+class PhraseTrigger(Trigger):
+    def __init__(self, phrase):
+        self.phrase = phrase
+
+    def is_phrase_in(self, text):
+        sep = list(string.punctuation)
+        clean_phrase = self.phrase
+        for c in sep[0:]:
+            text = text.replace(c, " ")
+            clean_phrase  = clean_phrase.replace(c, " ")
+        text_words = text.split()
+        phrase_words = clean_phrase.split()
+        
+        text = str.lower(" ".join(text_words))+" "
+        clean_phrase = str.lower(" ".join(phrase_words))+" "
+        if clean_phrase in text:
+            return True
+        else:
+            return False
+#cleaner solution by https://github.com/Per48edjes
+        # no_punct_text = ''.join(ch if ch not in string.punctuation else ' ' for ch in text.upper())
+        # cleaned_text = ' '.join(no_punct_text.split()) + ' '
+        # no_punct_phrase = ''.join(ch if ch not in string.punctuation else ' ' for ch in self.phrase.upper())
+        # cleaned_phrase = ' '.join(no_punct_phrase.split()) + ' '
+
+        # if cleaned_phrase in cleaned_text:
+        #     return True
+        # else:
+        #     return False
+
 # Problem 3
 # TODO: TitleTrigger
+
+class TitleTrigger(PhraseTrigger):
+    def __init__(self, phrase):
+        self.phrase = phrase
+
+    def evaluate(self, story):
+        if self.is_phrase_in(story.title):
+            return True
+        else:
+            return False
+
+
+
+
 
 # Problem 4
 # TODO: DescriptionTrigger

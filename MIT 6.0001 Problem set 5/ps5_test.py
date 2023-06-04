@@ -103,6 +103,7 @@ class ProblemSet5(unittest.TestCase):
             self.assertTrue(trig.evaluate(cuddly), "DescriptionTrigger failed to fire when the phrase appeared in the description.")
             self.assertTrue(trig.evaluate(exclaim), "DescriptionTrigger failed to fire when the words were separated by exclamation marks.")
             self.assertTrue(trig.evaluate(symbols), "DescriptionTrigger failed to fire when the words were separated by assorted punctuation.")
+            debugpy.breakpoint()
             self.assertTrue(trig.evaluate(spaces), "DescriptionTrigger failed to fire when the words were separated by multiple spaces.")
             self.assertTrue(trig.evaluate(caps), "DescriptionTrigger failed to fire when the phrase appeared with both uppercase and lowercase letters.")
             self.assertTrue(trig.evaluate(exact), "DescriptionTrigger failed to fire when the words in the phrase were the only words in the description.")
