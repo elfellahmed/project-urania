@@ -136,11 +136,18 @@ class TitleTrigger(PhraseTrigger):
             return False
 
 
-
-
-
 # Problem 4
 # TODO: DescriptionTrigger
+
+class DescriptionTrigger(PhraseTrigger):
+    def __init__(self, phrase):
+        self.phrase = phrase
+
+    def evaluate(self, story):
+        if self.is_phrase_in(story.description):
+            return True
+        else:
+            return False
 
 # TIME TRIGGERS
 
