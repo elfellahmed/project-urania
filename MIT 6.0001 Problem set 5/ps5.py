@@ -38,12 +38,13 @@ def process(url):
 
         try:
             pubdate = datetime.strptime(pubdate, "%a, %d %b %Y %H:%M:%S %Z")
-            pubdate.replace(tzinfo=pytz.timezone("GMT"))
-          #  pubdate = pubdate.astimezone(pytz.timezone('EST'))
+          #  pubdate.replace(tzinfo=pytz.timezone("GMT"))
+            pubdate = pubdate.astimezone(pytz.timezone('EST'))
           #  pubdate.replace(tzinfo=None)
         except ValueError:
             pubdate = datetime.strptime(pubdate, "%a, %d %b %Y %H:%M:%S %z")
-
+            pubdate = pubdate.astimezone(pytz.timezone('EST'))
+    
         newsStory = NewsStory(guid, title, description, link, pubdate)
         ret.append(newsStory)
     return ret
@@ -156,9 +157,41 @@ class DescriptionTrigger(PhraseTrigger):
 # Constructor:
 #        Input: Time has to be in EST and in the format of "%d %b %Y %H:%M:%S".
 #        Convert time from string to a datetime before saving it as an attribute.
+class TimeTrigger(Trigger):
+    def __init__(self, text_time):
+            time = datetime.strptime(text_time, "%d %b %Y %H:%M:%S").replace(tzinfo=pytz.timezone("US/Eastern"))
+            self.time = time
+            
+"""
+Time(String) is in format "3 Oct 2016 14:23:22", it is supposed to be EST.
+I need to compare it with pubtime(Datetime).
+pubtime has tzinfo set as GMT.
+->
+    convert Time to Datetime using the expected format.
+    set Tzinfo to EST for Time
+
+    in the instance test:
+        convert Time in GMT and test
+        return the right boolean
+"""
 
 # Problem 6
 # TODO: BeforeTrigger and AfterTrigger
+
+class BeforeTrigger(TimeTrigger):
+    def evaluate(self, story):   
+            if story.pubdate.replace(tzinfo=pytz.timezone('US/Eastern')) < self.time:
+                return True
+            else:
+                return False
+        
+class AfterTrigger(TimeTrigger):
+    def evaluate(self, story):
+        if story.pubdate.replace(tzinfo=pytz.timezone('US/Eastern')) > self.time:
+            return True
+        else:
+            return False
+ 
 
 
 # COMPOSITE TRIGGERS
