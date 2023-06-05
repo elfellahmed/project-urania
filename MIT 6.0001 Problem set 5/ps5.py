@@ -233,7 +233,12 @@ def filter_stories(stories, triggerlist):
     # TODO: Problem 10
     # This is a placeholder
     # (we're just returning all the stories, with no filtering)
-    return stories
+    selected_stories = []
+    for t in triggerlist[0:]:
+        for s in stories[0:]:
+            if t.evaluate(s):
+                selected_stories.append(s)
+    return selected_stories
 
 
 
