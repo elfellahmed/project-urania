@@ -302,7 +302,7 @@ def main_thread(master):
 
         # Problem 11
         # TODO: After implementing read_trigger_config, uncomment this line 
-        triggerlist = read_trigger_config('./triggers.txt')
+        triggerlist = read_trigger_config('/Users/mohamed.idrissi/Documents/Projects/Project Urania/project-urania/MIT_60001_Problem_set_5/triggers.txt')
         
         # HELPER CODE - you don't need to understand this!
         # Draws the popup window that displays the filtered stories
