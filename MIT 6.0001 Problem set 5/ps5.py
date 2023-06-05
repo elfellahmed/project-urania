@@ -266,7 +266,25 @@ def read_trigger_config(filename):
     # line is the list of lines that you need to parse and for which you need
     # to build triggers
 
-    print(lines) # for now, print it so you see what it contains!
+    trigger_map =  {"TITLE": TitleTrigger, "DESCRIPTION": DescriptionTrigger, "AFTER": AfterTrigger, "BEFORE": BeforeTrigger, "NOT": NotTrigger, "AND": AndTrigger, "OR": OrTrigger}
+    trigger_dict = {}
+    trigger_list = [] 
+
+    for line in lines:
+        l_items = line.split(',')
+        if l_items[0] == "ADD":
+            trigger_list[:] += [trigger_dict[l] for l in l_items[1:]]
+        else: 
+            if l_items[1] == "OR" or l_items[1] == "AND":
+                trigger_dict[l_items[0]] = trigger_map[l_items[1]](trigger_dict[l_items[2]], trigger_dict[l_items[3]])
+            else:
+                trigger_dict[l_items[0]] = trigger_map[l_items[1]](l_items[2])
+ 
+    return trigger_list
+
+
+
+    # print(lines) # for now, print it so you see what it contains!
 
 
 
