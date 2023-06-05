@@ -169,10 +169,6 @@ pubtime has tzinfo set as GMT.
 ->
     convert Time to Datetime using the expected format.
     set Tzinfo to EST for Time
-
-    in the instance test:
-        convert Time in GMT and test
-        return the right boolean
 """
 
 # Problem 6
@@ -198,6 +194,15 @@ class AfterTrigger(TimeTrigger):
 
 # Problem 7
 # TODO: NotTrigger
+class NotTrigger(Trigger):
+    def __init__(self, trigger):
+        self.trigger = trigger
+
+    def evaluate(self, story):
+        if self.trigger.evaluate(story):
+            return False
+        else:
+            return True 
 
 # Problem 8
 # TODO: AndTrigger
