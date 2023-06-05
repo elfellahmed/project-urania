@@ -131,10 +131,7 @@ class TitleTrigger(PhraseTrigger):
         self.phrase = phrase
 
     def evaluate(self, story):
-        if self.is_phrase_in(story.title):
-            return True
-        else:
-            return False
+        return self.is_phrase_in(story.get_title())
 
 
 # Problem 4
@@ -145,10 +142,8 @@ class DescriptionTrigger(PhraseTrigger):
         self.phrase = phrase
 
     def evaluate(self, story):
-        if self.is_phrase_in(story.description):
-            return True
-        else:
-            return False
+        return self.is_phrase_in(story.get_description())
+
 
 # TIME TRIGGERS
 
@@ -176,14 +171,14 @@ pubtime has tzinfo set as GMT.
 
 class BeforeTrigger(TimeTrigger):
     def evaluate(self, story):   
-            if story.pubdate.replace(tzinfo=pytz.timezone('US/Eastern')) < self.time:
+            if story.get_pubdate().replace(tzinfo=pytz.timezone('US/Eastern')) < self.time:
                 return True
             else:
                 return False
         
 class AfterTrigger(TimeTrigger):
     def evaluate(self, story):
-        if story.pubdate.replace(tzinfo=pytz.timezone('US/Eastern')) > self.time:
+        if story.get_pubdate().replace(tzinfo=pytz.timezone('US/Eastern')) > self.time:
             return True
         else:
             return False
